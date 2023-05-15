@@ -42,3 +42,6 @@ def post_edit(request, pk):
 
 def contacts(request):
     return render(request, 'blog/Contact.html')
+
+def video(request):
+    return render(request, 'blog/video.html')
