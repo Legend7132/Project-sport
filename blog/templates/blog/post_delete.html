@@ -1,0 +1,9 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h3>Удаление статьи</h3>
+    <form method="POST">{% csrf_token %}
+        <p>Вы действительно хотите удалить статью "{{ post.title }}"?</p>
+        <button type="submit" class="save btn btn-default">Подтвердить</button>
+    </form>
+{% endblock %}
