@@ -26,7 +26,7 @@ def post_new(request):
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
-    return render(request, 'blog/post_edit.html', {'form': form, 'header': 'Новая статья'})
+    return render(request, 'blog/post_new.html', {'form': form})
 
 @login_required
 def post_edit(request, pk):
@@ -40,7 +40,7 @@ def post_edit(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'form': form, 'header': 'Редактирование статьи'})
+    return render(request, 'blog/post_edit.html', {'form': form, 'post': post})
 
 @login_required
 def post_delete(request, pk):

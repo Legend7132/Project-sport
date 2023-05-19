@@ -63,16 +63,20 @@ footer {
     font-size: 0.8em;
 }
 
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
 .date {
     color: #828282;
 }
 
 .post-form textarea, .post-form input {
     width: 100%;
-}
-
-.save {
-    float: right;
 }
 
 .top-menu, .top-menu:hover, .top-menu:visited {
