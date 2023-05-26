@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+  <h2>Новости</h2>
+  {% for title, description, url, img_url in all_news %}      
+      <article> 
+        <h3><a href="{{ url }}">{{ title|linebreaks }}</a></h3>
+        <p>{{ description|linebreaks }}</p>
+        <img height="400" src="{{ img_url }}" alt="">
+      </article>
+  {% endfor %}
+{% endblock %}
