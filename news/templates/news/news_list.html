@@ -6,7 +6,10 @@
       <article> 
         <h3><a href="{{ elm.2 }}">{{ elm.0|linebreaks }}</a></h3>
         <p>{{ elm.1|linebreaks }}</p>
-        <img height="400" src="{{ elm.3 }}" alt="">
+        <p class="date">{{ elm.3 }}</p>
+        {% if elm.4 %}
+          <img height="{{ elm.5 }}" src="{{ elm.4 }}" alt="">
+        {% endif %}
       </article>
   {% endfor %}
 
