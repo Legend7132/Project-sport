@@ -5,12 +5,12 @@
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Удаление статьи</legend>
-                <p>Вы уверены, что хотите удалить статью "{{ post.title }}"?</p>
+                <legend class="border-bottom mb-4">Удаление записи</legend>
+                <p>Вы уверены, что хотите удалить запись "{{ post.title }}"?</p>
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-default" type="submit">Удалить</button>
-                <a class="btn btn-default" href="{% url 'post_detail' pk=post.pk %}">Отмена</a>
+                <button class="btn btn-light" type="submit">Удалить</button>
+                <a class="btn btn-light" href="{% url 'post_detail' pk=post.pk %}">Отмена</a>
             </div>
         </form>
     </div>

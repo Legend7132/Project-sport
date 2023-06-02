@@ -1,59 +1,78 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 a, a:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 article {
-    background-color: #f5f5f5;
-    padding: 10px;
-    margin-bottom: 20px;
+  background-color: #f5f5f5;
+  padding: 15px 10px;
+  margin-bottom: 20px;
+}
+
+header,
+footer {
+  flex-shrink: 0;
 }
 
 header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
 }
 
 header a, nav a, header a:hover, nav a:hover {
-    color: #fff;
+  color: #fff;
 }
 
-h3 a {
-    color: #000;
+article h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1, h2 {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+h2 a, h3 a {
+  color: #000;
 }
 
 nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
 }
 
 nav li {
-    padding: 0 10px;
+  padding: 0 10px;
 }
 
 main {
-    margin: 20px;
-    display: flex;
+  margin: 20px;
+  display: flex;
 }
 
 section {
-    flex: 3;
-    margin-right: 20px;
+  flex: 3;
+  margin-right: 20px;
 }
 
 table {
   border-collapse: collapse;
   width: 100%;
   text-align: center;
+  margin-bottom: 50px;
 }
 
 th, td {
@@ -83,15 +102,20 @@ td:last-child, th:last-child {
 }
 
 footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  margin-top: auto;
 }
 
 .author {
-    color: #999;
-    font-size: 0.8em;
+  color: #999;
+  font-size: 0.8em;
+}
+
+.comment {
+  padding: 5px 5px 5px 10px;
 }
 
 .container-contacts {
@@ -109,16 +133,17 @@ footer {
 }
 
 .date {
-    color: #828282;
+  color: #828282;
+}
+
+.obj-pagination {
+  text-align: center;
+}
+
+.panel-right + h2 {
+  max-width: 85%;
 }
 
 .post-form textarea, .post-form input {
-    width: 100%;
-}
-
-.top-menu, .top-menu:hover, .top-menu:visited {
-    color: #000;
-    float: right;
-    font-size: 26pt;
-    margin-right: 20px;
+  width: 100%;
 }

@@ -2,3 +2,5 @@ Django~=3.2.10
 django-crispy-forms==1.13.0
 pillow
 newsapi-python
+python-dateutil
+bs4

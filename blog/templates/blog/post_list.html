@@ -1,21 +1,65 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-    {% endif %}
-    <h2>Блог</h2>
-    {% for post in posts %}
-        <article>            
+
+    <div style="margin-top: 5px;">
+      {% if user.is_authenticated %}
+          <a href="{% url 'post_new' %}"><button class="btn btn-outline-dark" style="float: right; margin-right: 20px;" title="Добавить запись"><i class="bi bi-plus-lg"></i></button></a>
+      {% endif %}
+      <h2 style="float: left; margin-top: 0;">Блог</h2>
+    </div>
+
+    <div style="clear: both;">
+      {% for post in posts %}
+          <article>            
             <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
-            <p>{{ post.text|linebreaksbr }}</p>
-            <p class="author">{{ post.author }}</p>
-            <div class="date">
-                {{ post.published_date }}<br>
-                {% if post.redacted_date %}
-                    (ред. {{ post.redacted_date }})
-                {% endif %}
+            <div class="date" style="margin-bottom: 15px;">
+              {{ post.published_date }}
+              {% if post.redacted_date %}
+                  (ред. {{ post.redacted_date }})
+              {% endif %}
             </div>
-        </article>
-    {% endfor %}
+            <p>{{ post.text|linebreaksbr }}</p>
+            <p class="author" style="margin-bottom: 0;">{{ post.author }}</p>
+            {% if post.comments.count %}
+                <a href="{% url 'post_detail' pk=post.pk %}">Комментарии: {{ post.comments.count }}</a>
+            {% endif %}
+          </article>
+      {% endfor %}
+    </div>
+
+    <div class="obj-pagination">
+        {% if posts|length > 10 %}
+          {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">« Предыдущая</a>
+
+            {% if page_obj.number > 3 %}
+              <a href="?page=1">1</a>
+              {% if page_obj.number > 4 %}
+                <span>...</span>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <a href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+              <a href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
+              <span>...</span>
+              <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+            {% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
+              <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+            {% endif %}
+
+            <a href="?page={{ page_obj.next_page_number }}">Следующая »</a>
+          {% endif %}
+        {% endif %}
+    </div>
+
 {% endblock %}

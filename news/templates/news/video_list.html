@@ -1,0 +1,41 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h2>Видео</h2>
+    {% for header, video_url in video_list %}
+        <iframe style="margin: 30px 0;" width="699" height="393" src="{{ video_url }}" title="{{ header }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    {% endfor %}
+
+    <div class="obj-pagination">
+      {% if page_obj.has_previous %}
+        <a href="{% url 'video_list' pn=page_obj.previous_page_number %}">« Предыдущая</a>
+
+        {% if page_obj.number > 3 %}
+          <a href="{% url 'video_list' pn=1 %}">1</a>
+          {% if page_obj.number > 4 %}
+            <span>...</span>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a href="{% url 'video_list' pn=num %}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a href="{% url 'video_list' pn=num %}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
+          <span>...</span>
+          <a href="{% url 'video_list' pn=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+        {% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
+          <a href="{% url 'video_list' pn=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+
+        <a href="{% url 'video_list' pn=page_obj.next_page_number %}">Следующая »</a>
+      {% endif %}
+    </div>
+
+{% endblock %}

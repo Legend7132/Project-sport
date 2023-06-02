@@ -6,12 +6,12 @@
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Редактирование статьи</legend>
+                <legend class="border-bottom mb-4">Редактирование записи</legend>
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-default" type="submit">Сохранить</button>
-                <a class="btn btn-default" href="{% url 'post_detail' pk=post.pk %}">Отмена</a>
+                <button class="btn btn-light" type="submit">Сохранить</button>
+                <a class="btn btn-light" href="{% url 'post_detail' pk=post.pk %}">Отмена</a>
             </div>
         </form>
     </div>
