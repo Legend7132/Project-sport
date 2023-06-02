@@ -8,7 +8,6 @@ def register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
             messages.success(request, f'Ваш аккаунт создан: можно войти на сайт.')
             return redirect('login')
     else:

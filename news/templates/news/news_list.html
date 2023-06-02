@@ -1,48 +1,48 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-  <h2>Новости</h2>
-  {% for elm in page_obj %}      
-      <article> 
-        <h3><a href="{{ elm.2 }}">{{ elm.0|linebreaks }}</a></h3>
-        <p>{{ elm.1|linebreaks }}</p>
-        <p class="date">{{ elm.3 }}</p>
-        {% if elm.4 %}
-          <img height="{{ elm.5 }}" src="{{ elm.4 }}" alt="">
-        {% endif %}
-      </article>
-  {% endfor %}
-
-  <div style="text-align: center;">
-    {% if page_obj.has_previous %}
-      <a href="?page={{ page_obj.previous_page_number }}">« Предыдущая</a>
-
-      {% if page_obj.number > 3 %}
-        <a href="?page=1">1</a>
-        {% if page_obj.number > 4 %}
-          <span>...</span>
-        {% endif %}
-      {% endif %}
-    {% endif %}
-
-    {% for num in page_obj.paginator.page_range %}
-      {% if page_obj.number == num %}
-        <a href="?page={{ num }}">{{ num }}</a>
-      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-        <a href="?page={{ num }}">{{ num }}</a>
-      {% endif %}
+    <h2>Новости</h2>
+    {% for elm in page_obj %}      
+        <article> 
+          <h3><a href="{{ elm.2 }}">{{ elm.0|linebreaks }}</a></h3>
+          <p style="margin-top: -15px;" class="date">{{ elm.3 }}</p>
+          <p>{{ elm.1|linebreaks }}</p>
+          {% if elm.4 %}
+            <img style="max-height: 300px;" src="{{ elm.4 }}" alt="">
+          {% endif %}
+        </article>
     {% endfor %}
 
-    {% if page_obj.has_next %}
-      {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
-        <span>...</span>
-        <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
-      {% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
-        <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+    <div class="obj-pagination">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">« Предыдущая</a>
+
+        {% if page_obj.number > 3 %}
+          <a href="?page=1">1</a>
+          {% if page_obj.number > 4 %}
+            <span>...</span>
+          {% endif %}
+        {% endif %}
       {% endif %}
 
-      <a href="?page={{ page_obj.next_page_number }}">Следующая »</a>
-    {% endif %}
-  </div>
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
+          <span>...</span>
+          <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+        {% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
+          <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+
+        <a href="?page={{ page_obj.next_page_number }}">Следующая »</a>
+      {% endif %}
+    </div>
 
 {% endblock %}
