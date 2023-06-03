@@ -1,9 +1,8 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from dateutil.parser import isoparse
-from urllib.request import Request, urlopen
-from bs4 import BeautifulSoup
 from newsapi import NewsApiClient
+from googleapiclient.discovery import build
 
 
 def news_list(request):
@@ -37,36 +36,17 @@ def news_list(request):
     return render(request, "news/news_list.html", {'page_obj': page_obj})
 
 
-def video_list(request, pn):
-    main_url = "https://ufc.ru/watch/library?search=&page=" + str(pn - 1)
-    html_code = str(urlopen(main_url).read(),'utf-8')
-    soup = BeautifulSoup(html_code, "html.parser")
-    
-    pre_video_total = soup.find('div', {"class": 'althelete-total'}).text
-    video_total = pre_video_total[pre_video_total.find(' ') + 1:]
+def video_list(request):
+    youtube = build('youtube', 'v3', developerKey='YOUR_API_KEY')
+    youtube_request = youtube.search().list(part='id,snippet', channelId='UCU8bQExxd38i-mnn-GLOtfA', type = 'video', maxResults=50, order = 'date', videoEmbeddable = 'true')
+    response = youtube_request.execute()
+    video_list = []
+    for item in response['items']:
+        video_id = item['id']['videoId']
+        video_header = item['snippet']['title']
+        video_list.append([video_id, video_header])
 
-    pre_headers = soup.find_all('h3', {"class": 'e-t4'})
-    headers = []
-    for el in pre_headers:
-        headers.append(el.text.strip())
-
-    pre_video_page_urls = soup.find_all('a', {"class": 'c-card'})
-    video_page_urls = []
-    for el in pre_video_page_urls:
-        video_page_urls.append('https://ufc.ru' + el['href'])
-
-    video_urls = []
-    for el in video_page_urls:
-        html_code = str(urlopen(el).read(),'utf-8')
-        soup = BeautifulSoup(html_code, "html.parser")
-        inner_soup = soup.find('div', {"class": 'video-embed-field-provider-youtube'})
-        pre_video_url = inner_soup.find('iframe')['src']
-        video_urls.append(pre_video_url[:pre_video_url.find('?')])
-
-    video_list = zip(headers, video_urls)
-    
-    my_list = [i+1 for i in range(int(video_total))]
-    paginator = Paginator(my_list, len(video_urls))
+    paginator = Paginator(video_list, 10)
     page_num = request.GET.get('page', 1)
 
     try:
@@ -76,7 +56,7 @@ def video_list(request, pn):
     except EmptyPage:
         page_obj = paginator.page(paginator.num_pages)
 
-    return render(request, "news/video_list.html", {'video_list': video_list, 'page_obj': page_obj})
+    return render(request, "news/video_list.html", {'page_obj': page_obj})
 
 
 def contacts(request):
