@@ -7,7 +7,7 @@ from googleapiclient.discovery import build
 
 def news_list(request):
 
-    newsapi = NewsApiClient(api_key ='bc16482d3ee144e2bb7933c67e386c48')
+    newsapi = NewsApiClient(api_key ='YOUR_API_KEY')
     topnews = newsapi.get_everything(q = 'UFC -<li>', language = 'ru')
 
     latest = topnews['articles']
